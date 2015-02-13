@@ -1,0 +1,25 @@
+#!/bin/bash -eu
+
+ORG_PATH="github.com/rednut"
+REPO_PATH="${ORG_PATH}/nsq-cli"
+echo "REPO_PATH=$REPO_PATH"
+echo "PWD=$PWD"
+
+
+if [ ! -h gopath/src/${REPO_PATH} ]; then
+    mkdir -p gopath/src/${ORG_PATH}
+    ln -sv ../../../.. gopath/src/${REPO_PATH} || exit 255
+fi
+
+export GOBIN=${PWD}/bin
+export GOPATH=${PWD}/gopath
+
+
+eval $(go env)
+
+
+go get $REPO_PATH
+go build -o ${GOBIN}/nsq-producer $REPO_PATH/producer
+#go build ./...
+
+
