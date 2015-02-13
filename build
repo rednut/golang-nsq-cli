@@ -14,12 +14,19 @@ fi
 export GOBIN=${PWD}/bin
 export GOPATH=${PWD}/gopath
 
+pushd $GOPATH
+pwd
+
 
 eval $(go env)
 
+ls -l $GOPATH/src/$REPO_PATH
 
-go get $REPO_PATH
-go build -o ${GOBIN}/nsq-producer $REPO_PATH/producer
+go get github.com/rednut/nsq-cli/producer
+go get github.com/rednut/nsq-cli/consumer
+
+#go get $REPO_PATH/...
+#go build -o ${GOBIN}/nsq-producer $REPO_PATH/producer
 #go build ./...
 
 
